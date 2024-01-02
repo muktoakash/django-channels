@@ -71,6 +71,8 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = "mychatapp.asgi.application"
+
 WSGI_APPLICATION = 'mychatapp.wsgi.application'
 
 
