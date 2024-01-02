@@ -7,4 +7,5 @@ Daphne is a HTTP and WebSockets protocol server for ASGI to power Django-Channel
 
 ## Views:
 - (Chat Room lobby)[./chat/templates/chat/index.html]
- 
+
+## Files:
