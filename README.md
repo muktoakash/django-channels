@@ -1,6 +1,12 @@
 # django-channels
 Implement a basic chatting app using django channels. Following [medium article](https://medium.com/atomic-loops/django-channels-is-all-you-need-94628dd6815c). 
 
+
+![Two browser windows entering the same chat room from lobby.](image.png)
+![One window sending a message to another](image-1.png)
+![One window replying to a message from the other](image-2.png)
+![Both windows showing the messages](image-3.png)
+
 ## Packages:
 
 ## New Terms:
