@@ -16,6 +16,18 @@ Not that this has not implemented user authentication, so the chat messages do n
 ## Packages:
 All installed packages are listed in [requirements.txt](./requirements.txt)
 
+## Views:
+- (Chat Room lobby)[./chat/templates/chat/index.html]
+
+## Files:
+All relevant files can be found in [files.txt](./files.txt)
+
+## Testing:
+- Tested with selenium
+- Test to check that users in the same room can chat with each other from different windows
+- Test to chack that users in different chat room cannot sent each other messages.
+- Some improvements were made to the code for the [tests available in the official tutorial for channels](https://channels.readthedocs.io/en/latest/tutorial/part_4.html).
+
 ## New Terms that I learned:
 ### Channels and consumers
 [Channels](https://channels.readthedocs.io/en/latest/) is a project that takes Django and extends its abilities beyond HTTP - to handle WebSockets, chat protocols, IoT protocols, and more. It’s built on a Python specification called ASGI.
@@ -42,8 +54,5 @@ async_to_sync(channel_layer.receive)('test_channel')
     `python -m pip install -U 'channels[daphne]'`
 Daphne is a HTTP and WebSockets protocol server for ASGI to power Django-Channels.
 
-## Views:
-- (Chat Room lobby)[./chat/templates/chat/index.html]
-
-## Files:
-All relevant files can be found in [files.txt](./files.txt)
+## What's next?
+This project followed along a tutorial to implement a chat server. I will now read the rest of the documentation on channels and try to improve on this existing server as well as create new apps.
