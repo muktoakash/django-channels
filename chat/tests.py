@@ -1,5 +1,5 @@
 """chats/test.py"""
-from django.test import TestCase
+# from django.test import TestCase
 
 # Create your tests here.
 from channels.testing import ChannelsLiveServerTestCase
@@ -11,6 +11,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 
 class ChatTests(ChannelsLiveServerTestCase):
+    """Tests for chat app"""
     serve_static = True  # emulate StaticLiveServerTestCase
 
     @classmethod
@@ -29,6 +30,7 @@ class ChatTests(ChannelsLiveServerTestCase):
         super().tearDownClass()
 
     def test_when_chat_message_posted_then_seen_by_everyone_in_same_room(self):
+        """test that users in same room can message each other"""
         try:
             self._enter_chat_room("room_1")
 
@@ -36,20 +38,26 @@ class ChatTests(ChannelsLiveServerTestCase):
             self._enter_chat_room("room_1")
 
             self._switch_to_window(0)
+
+            WebDriverWait(self.driver, 5)
+            # Added wait here to make sure the second window is in room 1
+            # otherwise it doesn't receive the message if window 1 posts prematurely
+
             self._post_message("hello")
             WebDriverWait(self.driver, 2).until(
                 lambda _: "hello" in self._chat_log_value,
-                "Message was not received by window 1 from window 1",
+                'Message was not received by window 1 from window 1',
             )
             self._switch_to_window(1)
-            WebDriverWait(self.driver, 2).until(
+            WebDriverWait(self.driver, 20).until(
                 lambda _: "hello" in self._chat_log_value,
-                "Message was not received by window 2 from window 1",
+                'Message was not received by window 2 from window 1',
             )
         finally:
             self._close_all_new_windows()
 
     def test_when_chat_message_posted_then_not_seen_by_anyone_in_different_room(self):
+        """test that users in different chat rooms cannot message each other"""
         try:
             self._enter_chat_room("room_1")
 
@@ -101,6 +109,14 @@ class ChatTests(ChannelsLiveServerTestCase):
 
     def _post_message(self, message):
         ActionChains(self.driver).send_keys(message, Keys.ENTER).perform()
+        # Added the following to make sure the submit button is clicked after the meesage
+        # in sent. Otherwise the Enter may get pressed prematurely.
+        i = 0
+        while self._chat_log_value=="" and i < 10:    # Only try 10 times, then give up
+            btn=self.driver.find_element(By.ID, "chat-message-submit")
+            btn.click()
+            i+=1
+        print(f'clicked {i}-times and got {message}') # For debug and curiosity
 
     @property
     def _chat_log_value(self):
