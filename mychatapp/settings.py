@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "daphne", # new
+    "daphne", # new, must be listed first
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -81,6 +81,7 @@ TEMPLATES = [
     },
 ]
 
+# new
 ASGI_APPLICATION = "mychatapp.asgi.application"
 
 WSGI_APPLICATION = 'mychatapp.wsgi.application'
