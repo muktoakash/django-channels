@@ -8,7 +8,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 class ChatConsumer(AsyncWebsocketConsumer):
     """consumer class for chat app"""
     async def __init__(self):
-        self = self.super()
+        AsyncWebsocketConsumer.__init__()
         self.room_name = None
         self.room_group_name = None
 
@@ -23,7 +23,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def disconnect(self, code): # changed close_code to code
         await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
 
-    async def receive(self, text_data, bytes_data=None): # added bytes_data argument to match superclass
+    async def receive(self, text_data, bytes_data=None): 
+        # added bytes_data argument to match superclass
         text_data_json = json.loads(text_data)
         message = text_data_json["message"]
 
